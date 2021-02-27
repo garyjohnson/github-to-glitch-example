@@ -4,8 +4,6 @@
 name: Build
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -25,15 +23,3 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
-  deploy:
-    if: ${{ github.event_name == 'push' }}
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - name: Deploy to Glitch
-      uses: wei/git-sync@v3
-      with:
-        source_repo: $GITHUB_REPOSITORY
-        source_branch: main
-        destination_repo: ${{ secrets.glitch_git_URL }}
-        destination_branch: master

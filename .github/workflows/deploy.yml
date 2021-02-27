@@ -1,0 +1,17 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to Glitch
+      uses: wei/git-sync@v3
+      with:
+        source_repo: $GITHUB_REPOSITORY
+        source_branch: main
+        destination_repo: ${{ secrets.glitch_git_URL }}
+        destination_branch: master
